@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: drclinic
+    runtime: docker
+    plan: free
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: php artisan config:cache && php artisan route:cache && php artisan migrate --force && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=$PORT
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: SESSION_DRIVER
+        value: database
+      - key: LOG_CHANNEL
+        value: errorlog
+
+databases:
+  - name: drclinic-db
+    plan: free
