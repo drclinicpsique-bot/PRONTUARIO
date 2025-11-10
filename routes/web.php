@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\ProfissionalController;
 use App\Http\Controllers\AgendamentoController;
@@ -10,6 +12,34 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProntuarioPdfController;
 use App\Http\Controllers\Auth\PasswordController;
 use Illuminate\Support\Facades\Auth;
+
+// ============================================
+// ROTA TEMPORÁRIA - CRIAR ADMIN
+// ============================================
+Route::get('/criar-admin-agora', function () {
+    try {
+        $exists = DB::table('usuarios')->where('email', 'admin@drclinic.com')->exists();
+        
+        if ($exists) {
+            return '<h1>✅ Admin já existe!</h1><p>Email: admin@drclinic.com</p><p>Senha: Admin@123</p><p><a href="/login">Ir para o login</a></p>';
+        }
+        
+        DB::table('usuarios')->insert([
+            'nome_completo' => 'Administrador',
+            'email' => 'admin@drclinic.com',
+            'password' => Hash::make('Admin@123'),
+            'tipo_usuario' => 'admin',
+            'ativo' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        
+        return '<h1>✅ Admin criado com sucesso!</h1><p>Email: admin@drclinic.com</p><p>Senha: Admin@123</p><p><a href="/login">Ir para o login</a></p>';
+        
+    } catch (\Exception $e) {
+        return '<h1>❌ Erro:</h1><pre>' . $e->getMessage() . '</pre>';
+    }
+});
 
 // ============================================
 // ROTA PÚBLICA (REDIRECT PARA LOGIN)
