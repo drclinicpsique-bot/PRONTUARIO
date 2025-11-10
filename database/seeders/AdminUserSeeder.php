@@ -10,12 +10,14 @@ class AdminUserSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('users')->updateOrInsert(
+        DB::table('usuarios')->updateOrInsert(
             ['email' => 'admin@drclinic.com'],
             [
-                'name' => 'Administrador',
+                'nome_completo' => 'Administrador',
                 'email' => 'admin@drclinic.com',
                 'password' => Hash::make('Admin@123'),
+                'tipo_usuario' => 'admin',
+                'ativo' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

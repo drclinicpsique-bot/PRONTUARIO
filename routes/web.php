@@ -9,6 +9,7 @@ use App\Http\Controllers\ExameController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProntuarioPdfController;
 use App\Http\Controllers\Auth\PasswordController;
+use Illuminate\Support\Facades\Auth;
 
 // ============================================
 // ROTA PÚBLICA (REDIRECT PARA LOGIN)
